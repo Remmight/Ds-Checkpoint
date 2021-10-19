@@ -1,41 +1,47 @@
-function findDistinctElements(setOne,setTwo) {
-    console.log("Set 1: " + Arrays.toString(setOne) + ", Set 2: " + Arrays.toString(setTwo));
-    /*Map<Integer, Integer>*/ map = new HashMap();
+let set1 = [2, 4, 6, 8];
+let set2 = [3, 6, 9, 12];
 
-    for (var i = 0; i < setOne.length ; i++) {
-        var element = setOne[i];
-        if(map.containsKey(element)) {
-            var count = map.get(element);
-            map.put(element, count+1);
-        }else
-            map.put(element, 1);
-    }
+function addTwoArrays(a, b) {
+  let sum = 0;
 
-    for (var i = 0; i <setTwo.length ; i++) {
-        var element = setTwo[i];
-        if(map.containsKey(element)) {
-            var count = map.get(element);
-            map.put(element, count+1);
-        }else
-            map.put(element, 1);
+  for (let i = 0; i < a.length; i++) {
+    if (b.indexOf(a[i]) >= 0) {
+      continue;
     }
+    sum += a[i];
+  }
 
-    //get sum of distinct elements
-    let sum = 0;
-    /*Set<Integer>*/ set = map.keySet();
-    /*Iterator<Integer>*/ iterator = set.iterator();
-    while (iterator.hasNext()){
-        var key = iterator.next();
-        if(map.get(key)==1)
-            sum += key;
+  for (let i = 0; i < b.length; i++) {
+    if (a.indexOf(b[i]) >= 0) {
+      continue;
     }
-
-    console.log("Distinct Elements Sum : " + sum);
-    }
-
-    /*public static void*/ main(String[] args) {
-        var  setOne = {3, 1, 7, 9};
-        var  setTwo = {2, 4, 1, 9, 3};
-        findDistinctElements(setOne, setTwo);
-    }
+    sum += b[i];
+  }
+  return sum;
 }
+
+console.log(addTwoArrays(set1, set2));
+
+// using the hash table
+function addUniqueElement(a, b) {
+  let hash = new Map();
+
+  for (let i = 0; i < a.length; i++) {
+    if (hash.has(set1[i])) hash.set(set1[i], 1 + hash.get(set1[i]));
+    else hash.set(set1[i], 1);
+  }
+
+  for (let i = 0; i < b.length; i++) {
+    if (hash.has(set2[i])) hash.set(set2[i], 1 + hash.get(set2[i]));
+    else hash.set(set2[i], 1);
+  }
+
+  let sum = 0;
+
+  for (let entry of hash) {
+    if (parseInt(entry[1].toString()) == 1)
+      sum += parseInt(entry[0].toString());
+  }
+  return sum;
+}
+console.log(addUniqueElement(set1, set2));
